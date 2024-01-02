@@ -1,63 +1,74 @@
 #include <iostream>
 #include <cmath>
-using namespace std;
+#include <memory>
 
-double add(double a, double b);
-double subtract(double a, double b);
-double multiply(double a, double b);
-double divide(double a, double b);
+class Calculator {
+public:
+    Calculator(double a, double b, char op) : num1(a), num2(b), operation(op) {}
+
+    double calculateResult() const {
+        switch (operation) {
+            case '+':
+                return add();
+            case '-':
+                return subtract();
+            case '*':
+                return multiply();
+            case '/':
+                return divide();
+            case '^':
+                return power();
+            default:
+                std::cout << "[!] Invalid operator" << std::endl;
+                return NAN;
+        }
+    }
+
+private:
+    double num1, num2;
+    char operation;
+
+    double add() const {
+        return num1 + num2;
+    }
+
+    double subtract() const {
+        return num1 - num2;
+    }
+
+    double multiply() const {
+        return num1 * num2;
+    }
+
+    double divide() const {
+        if (num2 != 0) {
+            return num1 / num2;
+        } else {
+            std::cout << "[!] Cannot divide by zero" << std::endl;
+            return NAN;
+        }
+    }
+
+    double power() const {
+        return std::pow(num1, num2);
+    }
+};
 
 int main() {
     double num1, num2;
     char operation;
 
-    cout << "[~] Calculator\n\n";
+    std::cout << "[~] Calculator\n\n";
 
-    cout << "[+] Enter first number: ";
-    cin >> num1;
-    cout << "[+] Enter operator (+, -, *, /): ";
-    cin >> operation;
-    cout << "[+] Enter second number: ";
-    cin >> num2;
+    std::cout << "[+] Enter first number: ";
+    std::cin >> num1;
+    std::cout << "[+] Enter operator (+, -, *, /, ^): ";
+    std::cin >> operation;
+    std::cout << "[+] Enter second number: ";
+    std::cin >> num2;
 
-    switch (operation) {
-        case '+':
-            cout << "[+] Result: " << add(num1, num2) << endl;
-            break;
-        case '-':
-            cout << "[+] Result: " << subtract(num1, num2) << endl;
-            break;
-        case '*':
-            cout << "[+] Result: " << multiply(num1, num2) << endl;
-            break;
-        case '/':
-            cout << "[+] Result: " << divide(num1, num2) << endl;
-            break;
-        default:
-            cout << "[!] Invalid operator" << endl;
-    }
+    Calculator calculator(num1, num2, operation);
+    std::cout << "[+] Result: " << calculator.calculateResult() << std::endl;
 
     return 0;
-}
-
-// Function definitions
-double add(double a, double b) {
-    return a + b;
-}
-
-double subtract(double a, double b) {
-    return a - b;
-}
-
-double multiply(double a, double b) {
-    return a * b;
-}
-
-double divide(double a, double b) {
-    if (b != 0) {
-        return a / b;
-    } else {
-        cout << "[!] Cannot divide by zero" << endl;
-        return NAN; // Not-a-Number to indicate an error
-    }
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <memory>
+#include <stack>
 
 class Calculator {
 public:
@@ -9,15 +10,11 @@ public:
     double calculateResult() const {
         switch (operation) {
             case '+':
-                return add();
             case '-':
-                return subtract();
             case '*':
-                return multiply();
             case '/':
-                return divide();
             case '^':
-                return power();
+                return evaluateOperation();
             default:
                 std::cout << "[!] Invalid operator" << std::endl;
                 return NAN;
@@ -51,6 +48,23 @@ private:
 
     double power() const {
         return std::pow(num1, num2);
+    }
+
+    double evaluateOperation() const {
+        switch (operation) {
+            case '+':
+                return add();
+            case '-':
+                return subtract();
+            case '*':
+                return multiply();
+            case '/':
+                return divide();
+            case '^':
+                return power();
+            default:
+                return NAN;
+        }
     }
 };
 
